@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 test_walk_sequence.py
-Version: 1.1
-Step 4: Generate a simple walk-cycle skeleton sequence from a single image.
+
+Step 3: Motion / walk cycle frames
 
 What it does:
 - Loads a single character image (e.g. man.png)

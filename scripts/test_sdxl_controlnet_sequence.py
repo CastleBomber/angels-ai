@@ -3,7 +3,7 @@
 test_sdxl_controlnet_sequence.py
 
 Version: 1.3
-Step 5: Turn pose frames into "AI animation" frames using SDXL + ControlNet(OpenPose).
+Step 5B: Mult-frame generation
 
 What it does:
 - Loads skeleton pose frames from tests/walk_pose_00.png ... tests/walk_pose_11.png

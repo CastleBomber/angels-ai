@@ -2,7 +2,9 @@
 """
 Script: test_skeleton.py
 Test: RTMPose → Skeleton Render
-Version: 1.0
+
+Step 1: Pose detection sanity check
+Step 2: Pose-only conditioning image
 
 What it does:
 - Loads an character image

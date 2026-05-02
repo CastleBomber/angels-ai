@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-test_sdxl_controlnet_one.py
+(** Current script testing **)
 
-Version: 1.3 (**Current script testing**)
+test_sdxl_controlnet_one.py      
 
-Step 5A: One-frame SDXL+ControlNet sanity check (fastest debug).
+Step 5A: Single SDXL frame test
 
 What it does:
 - Loads ONE pose frame (skeleton on black conditioning image)
@@ -15,11 +15,13 @@ Usage:
   cd /Users/cbombs/github/frames-ai
   source .venv/bin/activate
 
+Input:
+  tests/walk_pose_00.png
+
   python3 -m scripts.test_sdxl_controlnet_one \
   --pose tests/walk_pose_00.png \
   --prompt "character, clean outline, consistent design, plain background" \
   --seed 123 --steps 15 --size 512
-
 
 Output:
   tests/sdxl_debug.png

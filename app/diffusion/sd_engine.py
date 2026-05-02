@@ -8,7 +8,7 @@
 
     What it does:
     - Loads the AI model that turns a stick‑figure pose (like an OpenPose skeleton) into a full image
-    - Automatically picks the best settings for your computer (GPU or CPU) to run fast and use less memory
+    - Automatically picks the best settings (GPU or CPU) to run fast and use less memory
     - Provides generate_pose_frame() to create a single image from a pose skeleton and prompt
 
 *********************************************************
@@ -30,6 +30,9 @@ class SDEngine:
     SDXL_MODEL = "stabilityai/stable-diffusion-xl-base-1.0"
     CONTROLNET_MODEL = "xinsir/controlnet-openpose-sdxl-1.0"
 
+    # ==============================================
+    # INITIALIZATION
+    # ==============================================
     def __init__(self, device: str = None):
         # --------------------------------------------
         # Device detection
@@ -49,7 +52,6 @@ class SDEngine:
             self.dtype = torch.float16
         else:
             self.dtype = torch.float32
-
 
         # --------------------------------------------
         # Load ControlNet and SDXL pipeline

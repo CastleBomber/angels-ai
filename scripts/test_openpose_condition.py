@@ -2,8 +2,7 @@
 """
 test_openpose_condition.py
 
-Version: 1.2
-Step 4: Generate OpenPose-style conditioning images for SDXL ControlNet.
+Step 4: True OpenPose conditioning
 
 What it does:
 - Loads a character image
