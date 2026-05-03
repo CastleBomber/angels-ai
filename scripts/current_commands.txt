@@ -1,3 +1,13 @@
+
+
+
+
+python3 -m scripts.test_openpose_condition man.png
+
+
+
+
+
 """
 Test with one frame first:
 

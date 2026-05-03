@@ -2,7 +2,6 @@
 """
 test_sdxl_controlnet_sequence.py
 
-Version: 1.3
 Step 5B: Mult-frame generation
 
 What it does:

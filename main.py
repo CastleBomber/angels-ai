@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
 """
 ********************************************************
-    Project: Frames AI
-    Version: 2.0
-    Author: CBOMBS
-    Date:   November 8th, 2025
-    Script: main.py
-    Description: An AI animation assitant that helps build storyboards 
-                 and generate motion poses from user commands
+Project: Frames AI
 
-    Example Usage:
-        source .venv/bin/activate
-        deactivate
-        python3 main.py
+Author: CBOMBS
+Date:   November 8th, 2025
+Script: main.py
+Step 0: Brain / Command Center
 
-        pixelate man.pn
-        pixelate 64x64 man.png
-        walk man.png
-        run
-        sit 
-        jump
-        turn
+Description: 
+    An AI animation assitant that helps build storyboards 
+    and generate motion poses from user commands
 
-    Notes:
-        memory.json
+Usage:
+    source .venv/bin/activate
+    deactivate
+    python3 main.py
+
+    pixelate man.pn
+    pixelate 64x64 man.png
+    walk man.png
+    run
+
+Notes:
+    memory.json
 *********************************************************
 """
 import os, json, re, sys, signal

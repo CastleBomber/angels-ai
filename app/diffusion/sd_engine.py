@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 ********************************************************
-    sd_engine.py
+sd_engine.py
+------------
 
-    SDXL + ControlNet engine for OpenPose conditioning
-    Version: 2.0
+SDXL + ControlNet engine for OpenPose conditioning
 
-    What it does:
-    - Loads the AI model that turns a stick‑figure pose (like an OpenPose skeleton) into a full image
-    - Automatically picks the best settings (GPU or CPU) to run fast and use less memory
-    - Provides generate_pose_frame() to create a single image from a pose skeleton and prompt
+What it does:
+- Loads the AI model that turns a stick‑figure pose (like an OpenPose skeleton) into a full image
+- Automatically picks the best settings (GPU or CPU) to run fast and use less memory
+- Provides generate_pose_frame() to create a single image from a pose skeleton and prompt
 
 *********************************************************
 """

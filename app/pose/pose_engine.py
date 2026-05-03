@@ -1,8 +1,64 @@
 #!/usr/bin/env python3
 """
-Script: pose_engine.py
-Version: 2.0
+pose_engine.py
+--------------
+
+Core Engine: Command → Pose / Motion / Image Actions
+
+What it does:
+- Detects animation-related commands from user text
+- Parses image filenames and optional size inputs
+- Handles image transformations (pixelate)
+- Generates simple pose sequences (walk / run / jump)
+- Uses SDXL + ControlNet engine to turn pose frames into AI images
+- Builds animated GIF outputs from generated frames
+
+Pipeline Role:
+- Bridges chat commands from main.py into actual visual actions
+- Connects pose generation with diffusion rendering
+- Serves as the core "animation assistant" controller
+
+Inputs:
+- User text commands
+- Source images (.png / .jpg / .jpeg / .gif)
+- Ex:
+- pixelate man.png
+- pixelate 64x64 man.png
+- walk man.png
+- run man.png
+- jump man.png
+- sit man.png
+- turn man.png
+
+Outputs:
+- Pixelated images
+- Pose frame sequences
+- AI-generated animation GIFs
+
+Usage:
+- Used in main.py
+
+    pose_engine = PoseEngine()
+
+    user_input = "walk man.png"
+    pose_engine.detect_pose(user_input)
+    pose_engine.handle_pose("walk", user_input)
+
+Notes:
+- Current motion system uses simple offsets (prototype stage)
+- Future upgrades:
+    • Better biomechanics
+    • Character consistency
+    • Video export
+    • Prompt memory
+
+
+    
+Example:
+
+    user_input
 """
+
 from PIL import Image           # opening images, resizing, pixelation
 from rtmlib import RTMPose      # creates skeletons of characters
 from app.diffusion.sd_engine import SDEngine
