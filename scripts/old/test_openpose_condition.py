@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 test_openpose_condition.py
+(unnecessary/ skip)
 --------------------------
 
 Step 4: True OpenPose conditioning
@@ -32,7 +33,7 @@ from rtmlib import Wholebody
 # ==============================================
 # OPENPOSE BODY CONNECTIONS (COCO-17 FORMAT)
 # ==============================================
-COCO_SKELETON = [
+COCO_SKELETON = [x
     (5, 7), (7, 9),      # left arm
     (6, 8), (8, 10),     # right arm
     (11, 13), (13, 15),  # left leg

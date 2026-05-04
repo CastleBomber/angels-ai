@@ -2,25 +2,40 @@
 """
 test_sdxl_controlnet_sequence.py
 
-Step 5B: Mult-frame generation
+Step 5: Mult-frame SDXL + ControlNet animation
 
 What it does:
-- Loads skeleton pose frames from tests/walk_pose_00.png ... tests/walk_pose_11.png
-- Uses SDXL + ControlNet (OpenPose) via Diffusers to generate a matching image for each pose
-- Saves:
-  1) tests/sdxl_frame_00.png ... tests/sdxl_frame_11.png
-  2) tests/sdxl_walk.gif
+- Loads multiple pose conditioning images (OpenPose-style skeletons)
+- Runs SDXL + ControlNet for each frame
+- Keeps same seed for temporal consistency
+- Generates a sequence of frames + an animated GIF
+
+What it does:
+- Loads multiple pose conditioning images (OpenPose-style skeletons)
+- Runs SDXL + ControlNet for each frame
+= Keeps same seed for temporal consistency
+- Generates a sequence of frames + an aimated GIF
+
+Input:
+- tests/walk_pose_00.png ... tests/walk_pose_XX.png (pose frames)
+- Text prompt describing character/style
+
+Output:
+- tests/sdxl_frame_00.png ... tests/sdxl_frame_XX.png
+- tests/sdxl_walk.gif
 
 Usage:
   cd /Users/cbombs/github/frames-ai
   source .venv/bin/activate
 
   python3 -m scripts.test_sdxl_controlnet_sequence \
-  --prompt "pixel art hero, clean outline, consistent character, plain background" \
-  --seed 123 \
-  --steps 15 \
-  --cfg 5.0 \
-  --size 512
+    --prompt "full body character, simple proportions, clean outline, flat colors, white background" \
+    --negative "blurry, deformed, bad anatomy, messy background, inconsistent character" \
+    --seed 123 \
+    --steps 12 \
+    --cfg 5.5 \
+    --cond 1.3 \
+    --size 512
 """
 
 import os
@@ -33,9 +48,13 @@ from app.diffusion.sd_engine import SDEngine
 
 
 def main():
+
+    # ==============================================
+    # ARGUMENT PARSING
+    # ============================================== 
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", required=True, help="Text prompt describing the character/style")
-    parser.add_argument("--negative", default="blurry, deformed, extra limbs, bad hands, low quality")
+    parser.add_argument("--negative", default="blurry, deformed, bad anatomy, extra limbs, extra fingers, messy background, clutter, inconsistent character")
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--steps", type=int, default=30)
     parser.add_argument("--cfg", type=float, default=5.0)
@@ -44,18 +63,28 @@ def main():
     parser.add_argument("--gif_name", default="sdxl_walk.gif")
     parser.add_argument("--gif_ms", type=int, default=120)
     parser.add_argument("--size", type=int, default=768, help="Image size (width=height)")
+    parser.add_argument("--cond", type=float, default=1.3)
     args = parser.parse_args()
 
     os.makedirs(args.out_dir, exist_ok=True)
 
+    # ==============================================
+    # LOAD POSE FRAMES
+    # ==============================================
     pose_paths = sorted(glob.glob(args.pose_glob))
     if not pose_paths:
         raise FileNotFoundError(f"No pose frames found matching: {args.pose_glob}")
 
     print(f"🧩 Found {len(pose_paths)} pose frames")
 
+    # ==============================================
+    # Initialize SD ENGINE
+    # ==============================================
     sd = SDEngine()
 
+    # ==============================================
+    # GENERATE FRAMES
+    # ==============================================
     out_frames = []
     for i, pose_path in enumerate(pose_paths):
         pose_img = Image.open(pose_path).convert("RGB")
@@ -67,11 +96,12 @@ def main():
         print(f"🎨 Generating frame {i:02d} from {os.path.basename(pose_path)} ...")
         frame = sd.generate_pose_frame(
             text_prompt=args.prompt,
-            pose_image=pose_img,
+            pose_image=pose_img.resize((args.size, args.size), Image.NEAREST),
             negative_prompt=args.negative,
             num_inference_steps=args.steps,
             guidance_scale=args.cfg,
-            seed=args.seed,  # keep SAME seed across frames for consistency
+            seed=args.seed,
+            controlnet_conditioning_scale=args.cond,
             width=args.size,
             height=args.size,
         )
@@ -80,11 +110,19 @@ def main():
         frame.save(out_path)
         out_frames.append(frame)
 
+    # ==============================================
+    # BUILD GIF
+    # ==============================================
     gif_path = os.path.join(args.out_dir, args.gif_name)
-    imageio.mimsave(gif_path, [f.convert("RGB") for f in out_frames], duration=args.gif_ms / 1000.0)
-    print(f"✅ Wrote frames: {args.out_dir}/sdxl_frame_*.png")
-    print(f"✅ Wrote GIF: {gif_path}")
 
+    imageio.mimsave(
+        gif_path, 
+            [f.convert("RGB") for f in out_frames], 
+            duration=args.gif_ms / 1000.0
+    )
+
+    print(f"✅ Frames saved → {args.out_dir}/sdxl_frame_*.png")
+    print(f"✅ GIF saved → {gif_path}")
 
 if __name__ == "__main__":
     main()

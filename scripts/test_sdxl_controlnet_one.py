@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-(** Current script testing **)
+test_sdxl_controlnet_one.py
+---------------------------    
 
-test_sdxl_controlnet_one.py      
-
-Step 5A: Single SDXL frame test
+Step 4: Single SDXL + ControlNet frame test
 
 What it does:
 - Loads ONE pose frame (skeleton on black conditioning image)
@@ -20,8 +19,13 @@ Input:
 
   python3 -m scripts.test_sdxl_controlnet_one \
   --pose tests/walk_pose_00.png \
-  --prompt "character, clean outline, consistent design, plain background" \
-  --seed 123 --steps 15 --size 512
+  --prompt "full body human character, standing pose, centered, simple proportions, clean lineart, flat colors, white background" \
+  --negative "blurry, deformed, bad anatomy, extra limbs, messy background, abstract shapes" \
+  --seed 123 \
+  --steps 20 \
+  --cfg 6 \
+  --cond 1.3 \
+  --size 512
 
 Output:
   tests/sdxl_debug.png
