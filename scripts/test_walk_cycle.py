@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-test_walk_sequence.py
+test_walk_cycle.py
 
 Step 3: Motion / walk cycle frames
 
@@ -9,12 +9,12 @@ What it does:
 - Runs RTMLib Wholebody (ONNX Runtime) once to detect full-body pose keypoints
 - Identifies the character’s body, limbs, and joints using an AI pose-detection model
 - Generates a short walk-cycle by smoothly offsetting the detected keypoints over time
-- Produces a sequence of skeleton-only images on a black background (ControlNet-ready)
+- Produces a cycle of skeleton-only images on a black background (ControlNet-ready)
 
 
 Usage:
   source .venv/bin/activate
-  python3 test_walk_sequence.py man.png
+  python3 test_walk_cycle.py man.png
 
 Creates:
   tests/walk_pose_00.png ... tests/walk_pose_11.png   (skeleton-on-black frames)
@@ -122,11 +122,11 @@ def main(img_path: str, num_frames: int = 12, kpt_thr: float = 0.1):
         out_path = os.path.join("tests", f"walk_pose_{t:02d}.png")
         cv2.imwrite(out_path, vis)
 
-    print("✅ Done. Skeleton sequence written to tests/walk_pose_*.png")
+    print("✅ Done. Skeleton cycle written to tests/walk_pose_*.png")
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("❌ Usage: python3 test-walk-sequence.py <image.png>")
+        print("❌ Usage: python3 test-walk-cycle.py <image.png>")
         sys.exit(1)
     main(sys.argv[1])

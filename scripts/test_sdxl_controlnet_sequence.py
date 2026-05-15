@@ -2,7 +2,7 @@
 """
 test_sdxl_controlnet_sequence.py
 
-Step 5: Mult-frame SDXL + ControlNet animation
+Step 5: Multi-frame SDXL + ControlNet animation
 
 What it does:
 - Loads multiple pose conditioning images (OpenPose-style skeletons)
