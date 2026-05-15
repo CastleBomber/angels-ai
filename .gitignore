@@ -4,6 +4,8 @@ generated/
 *.gif
 .env
 node_modules
+tests/
+tests/saved/
 # Model weights
 models/*.onnx
 models/*.pth
