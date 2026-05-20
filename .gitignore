@@ -7,6 +7,10 @@ node_modules
 tests/
 tests/saved/
 assets/
+outputs/
+outputs/poses/
+outputs/frames/
+outputs/videos/
 
 # Model weights
 models/*.onnx
