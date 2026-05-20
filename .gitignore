@@ -6,6 +6,8 @@ generated/
 node_modules
 tests/
 tests/saved/
+assets/
+
 # Model weights
 models/*.onnx
 models/*.pth
